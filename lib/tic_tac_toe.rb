@@ -105,7 +105,6 @@ def winner(board)
 end
 
 def play(board)
-  gets
   until over?(board)
     display_board(board)
     current_player(board)
