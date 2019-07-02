@@ -1,6 +1,15 @@
 board = [" ", " ", " ", " ", " ", " ", " ", " ", " "]
 WIN_COMBINATIONS = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [0, 4, 8], [1, 4, 7], [2, 5, 8], [2, 4, 6]]
 
+def play(board)
+  turn(board) until over?(board)
+  if won?(board)
+    puts "Congratulations #{winner(board)}!"
+  elsif draw?(board)
+    puts "Cat's Game!"
+  end
+end
+
 def display_board(board)
   puts " #{board[0]} | #{board[1]} | #{board[2]} "
   puts "-----------"
@@ -22,11 +31,7 @@ def position_taken?(board, index)
 end
 
 def valid_move?(board, index)
-  if index.between?(0,8) && !position_taken?(board, index)
-    true
-  else
-    false
-  end
+  index.between?(0,8) && !position_taken?(board, index)
 end
 
 def turn(board)
@@ -35,7 +40,7 @@ def turn(board)
   index = input_to_index(user_input)
   index
   if valid_move?(board, index) && !position_taken?(board, index)
-    move(board, index, value = "X")
+    move(board, index, (current_player(board)))
   else
     turn(board)
   end
@@ -43,33 +48,20 @@ def turn(board)
 end
 
 def turn_count(board)
-  counter = 0
-  board.each do |position|
-    if position == "X" || position == "O"
-      counter += 1
-    end
-  end
-  puts counter
-  return counter
+  board.count { |token| token == 'X' || token == 'O' }
 end
 
 def current_player(board)
-  if (turn_count(board)) % 2 == 0
-    return "X"
-    puts "X"
-  else
-    return "O"
-    puts "O"
-  end
+  turn_count(board).even? ? "X" : "O"
 end
 
+
 def won?(board)
-   WIN_COMBINATIONS.detect do |combination|
-     if (board[combination[0]] == "X" && board[combination[1]] == "X" && board[combination[2]] == "X") ||
-        (board[combination[0]] == "O" && board[combination[1]] == "O" && board[combination[2]] == "O")
-        return combination
-     end
-   end
+  WIN_COMBINATIONS.detect do |combo|
+    board[combo[0]] == board[combo[1]] &&
+      board[combo[1]] == board[combo[2]] &&
+      position_taken?(board, combo[0])
+  end
 end
 
 def full?(board)
@@ -100,23 +92,6 @@ def winner(board)
       return "O"
     elsif draw?(board)
      return "nil"
-    end
-  end
-end
-
-def play(board)
-  until over?(board)
-    display_board(board)
-    current_player(board)
-    turn(board)
-    if over?(board) && won?(board)
-      if winner(board) == "X"
-        return "Congratulations X!"
-      elsif winner?(board) == "O"
-        return "Congratulations O!"
-      elsif over?(board) && draw(board)
-        return "Cat's Game!"
-      end
     end
   end
 end
