@@ -105,9 +105,10 @@ def winner(board)
 end
 
 def play(board)
-  until over?(board)
-    display_board(board)
-    current_player(board)
-    turn(board)
+  turn(board) until over?(board)
+    if won?(board)
+      return "Congratulations #{winner(board)}!"
+    elsif draw
+      return "Cat's Game!"
   end
 end
