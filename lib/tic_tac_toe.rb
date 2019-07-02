@@ -116,6 +116,6 @@ def play(board)
         return "Congratulations O!"
       elsif over?(board) && draw(board)
         return "Cat's Game!"
-      end
+    end
   end
 end
