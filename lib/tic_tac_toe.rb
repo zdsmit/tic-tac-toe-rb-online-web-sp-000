@@ -109,14 +109,12 @@ def play(board)
     display_board(board)
     current_player(board)
     turn(board)
-    if over?(board) && won?(board)
-      if winner(board) == "X"
-        return "Congratulations X!"
-      elsif winner?(board) == "O"
-        return "Congratulations O!"
-      elsif over?(board) && draw(board)
-        return "Cat's Game!"
-      end
-    end
+  if over?(board) && won?(board)
+    if winner(board) == "X"
+      return "Congratulations X!"
+    elsif winner?(board) == "O"
+      return "Congratulations O!"
+    elsif over?(board) && draw(board)
+      return "Cat's Game!"
   end
 end
