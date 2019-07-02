@@ -40,7 +40,7 @@ def turn(board)
   index = input_to_index(user_input)
   index
   if valid_move?(board, index) && !position_taken?(board, index)
-    move(board, index, value = "X")
+    move(board, index, (current_player(board)))
   else
     turn(board)
   end
