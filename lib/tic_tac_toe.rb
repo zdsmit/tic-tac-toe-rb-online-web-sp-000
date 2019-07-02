@@ -110,4 +110,7 @@ def play(board)
     current_player(board)
     turn(board)
   end
+  play([" ", " ", " ", " ", " ", " ", " ", " ", "X"])
+  play([" ", " ", " ", " ", " ", " ", "O", " ", "X"])
+  play([" ", " ", " ", " ", " ", " ", "O", "X", "X"])
 end
